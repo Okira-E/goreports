@@ -89,7 +89,7 @@ var runInit = &cobra.Command{
 	},
 }
 
-var startAppCmd = &cobra.Command{
+var startServerCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Start the program",
 	Long:  "Starts accepting requests and generating reports",
@@ -115,7 +115,7 @@ func Execute() {
 	rootCmd.AddCommand(
 		versionCmd,
 		runInit,
-		startAppCmd,
+		startServerCmd,
 	)
 
 	if err := rootCmd.Execute(); err != nil {
