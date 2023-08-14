@@ -25,8 +25,14 @@ You can install the GoReports binary from the [releases page](https://github.com
 ### Requirements
 
 - Go 1.18 or higher
+- Enable `CGO_ENABLED` by `go env -w CGO_ENABLED=1`. This is required for the SQLite driver to work.
 
-You can build GoReports from source by cloning the repository and running `go build` in the root directory.
+### Building locally
+
+```shell
+go env -w CGO_ENABLED=1
+go build
+```
 
 ## Usage and Documentation
 
