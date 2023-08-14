@@ -67,7 +67,7 @@ func StartServer() {
 
 	// Start the server.
 	const port = ":3200"
-	err := app.Listen("127.0.0.1" + port)
+	err := app.Listen("0.0.0.0" + port)
 	if err != nil {
 		log.Fatalf("error while starting the server: %v", err)
 	}
