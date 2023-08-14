@@ -5,6 +5,13 @@ handlebars syntax that allows you to add SQL queries directly into the template 
 
 See the [Example](#example) section for a sample template.
 
+## Where to use GoReports?
+
+Wherever there is a `Print as PDF` button, GoReports can be used to generate the PDF. Some examples are:
+- Invoices
+- Payment history
+- Sales reports
+
 ## Prerequisites
 
 You need [wkhtmltopdf](https://wkhtmltopdf.org/downloads.html) installed and in your PATH for GoReports to work.
