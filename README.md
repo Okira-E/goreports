@@ -94,7 +94,7 @@ GoReports uses an extended handlebars syntax to parse and render templates. The 
 <div style="max-width: 800px; margin: 0 auto;">
     <h1>Payment History Report</h1>
 
-    <p>[P[extra_param]]</p> <!-- This is a parameter passed to the template at render time -->
+    <p>[P[extra_param]]</p> <!-- This is a parameter passed to the template at request/render time -->
 
     <table>
         <tr>
