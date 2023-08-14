@@ -38,6 +38,28 @@ go build
 
 GoReports is a command line tool. You can run `goreports --help` to see the available commands and flags.
 
+### Start GoReports using Docker
+
+1. Build the Docker image using the following command:
+
+```shell
+docker build -t goreports \
+  --build-arg db_dialect=your_db_dialect \
+  --build-arg db_user=your_db_username \
+  --build-arg db_password=your_db_password \
+  --build-arg db_host=your_db_host \
+  --build-arg db_port=your_db_port \
+  --build-arg db_name=your_db_name .
+```
+
+Note: Database information is required to execute the queries in the templates and fetch the data for the reports.
+
+2. Run the Docker image using the following command:
+
+```shell
+docker run -p 3200:3200 goreports
+```
+
 ### Set up GoReports on your machine
 
 ```shell
