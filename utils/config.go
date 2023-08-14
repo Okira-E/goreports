@@ -47,13 +47,10 @@ func GetConfigFilePathBasedOnOS() (string, safego.Option[error]) {
 		partialConfigPath := filepath.Join("Library", "Application Support", "goreports", "config.json")
 		return filepath.Join("/Users", osUserName, partialConfigPath), safego.None[error]()
 	} else if runtime.GOOS == "linux" {
-		osUserName = os.Getenv("USER")
-		if osUserName == "" {
-			return "", safego.Some(errors.New("USER environment variable is not set"))
-		}
+		osHomePath := os.Getenv("HOME")
 
 		partialConfigPath := filepath.Join(".config", "goreports", "config.json")
-		return filepath.Join("/home", osUserName, partialConfigPath), safego.None[error]()
+		return filepath.Join(osHomePath, partialConfigPath), safego.None[error]()
 	} else {
 		err := errors.New("unsupported OS")
 		return "", safego.Some(err)
@@ -82,13 +79,10 @@ func GetDataDirBasedOnOS() (string, safego.Option[error]) {
 		return filepath.Join("/Users", osUserName, partialConfigPath), safego.None[error]()
 
 	} else if runtime.GOOS == "linux" {
-		osUserName = os.Getenv("USER")
-		if osUserName == "" {
-			return "", safego.Some(errors.New("USER environment variable is not set"))
-		}
+		osHomePath := os.Getenv("HOME")
 
 		partialConfigPath := filepath.Join(".config", "goreports", "data", "")
-		return filepath.Join("/home", osUserName, partialConfigPath), safego.None[error]()
+		return filepath.Join(osHomePath, partialConfigPath), safego.None[error]()
 	} else {
 		err := errors.New("unsupported OS")
 		return "", safego.Some(err)
