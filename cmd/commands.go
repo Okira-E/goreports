@@ -7,6 +7,7 @@ import (
 	"github.com/Okira-E/goreports/utils"
 	"github.com/spf13/cobra"
 	"log"
+	"strconv"
 )
 
 var rootCmd = &cobra.Command{
@@ -28,6 +29,44 @@ var runInit = &cobra.Command{
 	Short: "Initializes GoReports on your system",
 	Long:  `Initializes GoReports on your system`,
 	Run: func(cmd *cobra.Command, args []string) {
+		dbDialect, err := cmd.Flags().GetString("db-dialect")
+		if err != nil {
+			log.Fatalf("error while getting the db-dialect flag: %v", err)
+		}
+		dbUser, err := cmd.Flags().GetString("db-username")
+		if err != nil {
+			log.Fatalf("error while getting the db-username flag: %v", err)
+		}
+		dbPassword, err := cmd.Flags().GetString("db-password")
+		if err != nil {
+			log.Fatalf("error while getting the db-password flag: %v", err)
+		}
+		dbHost, err := cmd.Flags().GetString("db-host")
+		if err != nil {
+			log.Fatalf("error while getting the db-host flag: %v", err)
+		}
+		dbPortStr, err := cmd.Flags().GetString("db-port")
+		if err != nil {
+			log.Fatalf("error while getting the db-port flag: %v", err)
+		}
+		dbPort, err := strconv.Atoi(dbPortStr)
+		if err != nil {
+			dbPort = 0
+		}
+		dbName, err := cmd.Flags().GetString("db-name")
+		if err != nil {
+			log.Fatalf("error while getting the db-name flag: %v", err)
+		}
+
+		dbConfig := types.DbConfig{
+			Dialect:  dbDialect,
+			Host:     dbHost,
+			Port:     dbPort,
+			Username: dbUser,
+			Password: dbPassword,
+			Database: dbName,
+		}
+
 		// Create the config files if they don't exist.
 		found, errOpt := utils.DoesConfigFileExists()
 		if errOpt.IsSome() {
@@ -45,7 +84,7 @@ var runInit = &cobra.Command{
 		}
 
 		// Prompt the user to enter their database information.
-		dbConfig, errOpt := utils.PromptForDbConfig()
+		errOpt = utils.PromptForDbConfig(&dbConfig)
 		if errOpt.IsSome() {
 			log.Fatalf("error while prompting for the database config: %v", errOpt.Unwrap())
 		}
@@ -112,6 +151,15 @@ var startServerCmd = &cobra.Command{
 }
 
 func Execute() {
+	// Add the flags to the runInit command.
+	runInit.Flags().StringP("db-dialect", "d", "", "The dialect of the database")
+	runInit.Flags().StringP("db-username", "u", "", "The username for the database")
+	runInit.Flags().StringP("db-password", "p", "", "The password for the database")
+	runInit.Flags().StringP("db-host", "H", "", "The host for the database")
+	runInit.Flags().StringP("db-port", "P", "", "The port for the database")
+	runInit.Flags().StringP("db-name", "D", "", "The database name")
+
+	// Add the commands to the root command.
 	rootCmd.AddCommand(
 		versionCmd,
 		runInit,
