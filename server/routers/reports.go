@@ -12,6 +12,42 @@ import (
 func ReportsRouter(app *fiber.App) {
 	const controllerName = "/report"
 
+	app.Get(controllerName+"/list", func(ctx *fiber.Ctx) error {
+		rows, errOpt := (*InternalDb).Query("SELECT * FROM reports")
+		if errOpt.IsSome() {
+			return ctx.Status(500).SendString(errOpt.Unwrap().Error())
+		}
+
+		reportsWithNullableFields := []types.ReportWithNullableFields{}
+
+		for rows.Next() {
+			report := types.ReportWithNullableFields{}
+			err := rows.Scan(&report.ID, &report.Name, &report.Title, &report.Description, &report.Template, &report.CreatedAt, &report.UpdatedAt)
+			if err != nil {
+				return ctx.Status(500).SendString(err.Error())
+			}
+			reportsWithNullableFields = append(reportsWithNullableFields, report)
+		}
+
+		// Convert the nullable fields to non-nullable fields.
+		reports := []types.Report{}
+		for _, report := range reportsWithNullableFields {
+			reports = append(reports, types.Report{
+				ID:          report.ID,
+				Name:        report.Name.String,
+				Title:       report.Title.String,
+				Description: report.Description.String,
+				Template:    report.Template.String,
+				CreatedAt:   report.CreatedAt.Int64,
+				UpdatedAt:   report.UpdatedAt.Int64,
+			})
+		}
+
+		return ctx.Status(200).JSON(reports)
+	})
+
+	// ------------------------------------------------------------
+
 	app.Post(controllerName+"/save", func(ctx *fiber.Ctx) error {
 		report := types.Report{}
 
