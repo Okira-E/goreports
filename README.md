@@ -148,9 +148,21 @@ After saving a report you can render it by sending a POST request to `/report/re
   }
 }
 ```
-
 The report will be rendered into PDF and sent as a buffer in the response (future versions may allow you to save the PDF to S3 buckets).
 
+### Delete a report
+
+To delete a report, send a DELETE request to GoReports' server at `/report/delete` endpoint with the following JSON body:
+
+```json
+{
+  "reportName": "required"
+}
+```
+
+### List all reports
+
+To list all reports, send a GET request to GoReports' server at `/report/list` endpoint.
 
 ## Contributing
 
