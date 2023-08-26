@@ -147,7 +147,7 @@ After saving a report you can render it by sending a POST request to `/report/re
   },
   "params": {
     "customer_id": 2,
-    "extra_param": "This is a parameter passed from the client.",
+    "extra_param": "This is a parameter passed from the client."
   }
 }
 ```
