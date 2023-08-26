@@ -90,6 +90,7 @@ GoReports uses an extended handlebars syntax to parse and render templates. The 
   handlebars block. You can then access the properties of each object in the array like you would in a normal handlebars.
 
 #### Example
+This is a snippet of a template that uses all the syntaxes mentioned above:
 ```html
 <div style="max-width: 800px; margin: 0 auto;">
     <h1>Payment History Report</h1>
@@ -105,7 +106,7 @@ GoReports uses an extended handlebars syntax to parse and render templates. The 
         {{#each [Q[SELECT creation_date, invoice_number, amount_paid FROM payments WHERE customer_id =
         [P[customer_id]] ]]}} <!-- This is a query passed to the template with a parameter in it -->
         <tr>
-            <td>{{datify creation_date}}</td>
+            <td>{{creation_date}}</td>
             <td>{{invoice_number}}</td>
             <td>{{amount_paid}}</td>
             {{/each}}
@@ -113,6 +114,8 @@ GoReports uses an extended handlebars syntax to parse and render templates. The 
     </table>
 </div>
 ```
+It generates (along with hidden CSS code) this [report](./examples/payment_history.pdf) when rendered. As you can see, The SQL query is executed with the `customer_id` param (passed at each render request in the API) and its multiple results are passed to the handlebars loop.
+
 
 ### Save a report
 
