@@ -136,7 +136,12 @@ func ReportsRouter(app *fiber.App) {
 		}
 
 		// Generate the document
-		generatedPDFBuffer, errOpt := core.GeneratePDFFromHtml(compiledTemplate, renderBody.PrintingOptions)
+		reportGeneratorParams := types.ReportGeneratorParams{
+			Title: report.Title.String,
+			Html:  compiledTemplate,
+		}
+
+		generatedPDFBuffer, errOpt := core.GeneratePDFFromHtml(reportGeneratorParams, renderBody.PrintingOptions)
 		if errOpt.IsSome() {
 			return ctx.Status(500).SendString(errOpt.Unwrap().Error())
 		}

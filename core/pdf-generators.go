@@ -11,7 +11,7 @@ import (
 // GeneratePDFFromHtml generates a PDF from HTML.
 // It takes in HTML as a string and printing options of type types.PrintingOptions
 // It returns a buffer and an error.
-func GeneratePDFFromHtml(html string, printingOptions types.PrintingOptions) (*bytes.Buffer, safego.Option[error]) {
+func GeneratePDFFromHtml(reportParams types.ReportGeneratorParams, printingOptions types.PrintingOptions) (*bytes.Buffer, safego.Option[error]) {
 	// Create new PDF generator
 	pdfGenerator, err := pdf.NewPDFGenerator()
 	if err != nil {
@@ -37,7 +37,8 @@ func GeneratePDFFromHtml(html string, printingOptions types.PrintingOptions) (*b
 	pdfGenerator.Orientation.Set(orientation)
 	pdfGenerator.Grayscale.Set(true)
 
-	pdfGenerator.AddPage(pdf.NewPageReader(strings.NewReader(html)))
+	pdfGenerator.Title.Set(reportParams.Title)
+	pdfGenerator.AddPage(pdf.NewPageReader(strings.NewReader(reportParams.Html)))
 
 	// Create PDF document in internal buffer
 	err = pdfGenerator.Create()
