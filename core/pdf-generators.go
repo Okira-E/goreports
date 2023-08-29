@@ -27,14 +27,12 @@ func GeneratePDFFromHtml(reportParams types.ReportGeneratorParams, printingOptio
 
 	pdfGenerator.PageSize.Set(printingOptions.PaperSize)
 
-	var orientation string
 	if printingOptions.Landscape {
-		orientation = "Landscape"
+		pdfGenerator.Orientation.Set("Landscape")
 	} else {
-		orientation = "Portrait"
+		pdfGenerator.Orientation.Set("Portrait")
 	}
 
-	pdfGenerator.Orientation.Set(orientation)
 	pdfGenerator.Grayscale.Set(true)
 
 	pdfGenerator.Title.Set(reportParams.Title)
