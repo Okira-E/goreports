@@ -126,13 +126,19 @@ To save a report, send a POST request to GoReports' server at `/report/save` end
   "name": "required",
   "title": "required",
   "description": "optional",
-  "template": "<html>required</html>"
+  "header": "<html>optional</html>",
+  "body": "<html>required</html>",
+  "footer": "<html>optional</html>"
 }
 ```
 
 The `name` field is the name of the report. Rendering the report will require this name.
 
-The `template` field is the template to be parsed and rendered into PDF.
+The `body` field is the template to be parsed and rendered into PDF.
+
+`header` and `footer` fields are optional and will be prepended and appended to the `body` respectively on each page.
+
+***Note: page numbers are generated at render time and replace the footer or the header if aer positioned at the bottom or the top of the page respectively.***
 
 ### Render a report
 
@@ -143,7 +149,15 @@ After saving a report you can render it by sending a POST request to `/report/re
   "reportName": "payment_history",
   "printingOptions": {
     "paperSize": "A4",
-    "landscape": false
+    "landscape": false,
+    "marginTop": 20,
+    "marginRight": 0,
+    "marginBottom": 10,
+    "marginLeft": 0,
+    "pageNumbers": {
+      "enabled": false,
+      "position": "bottom-center" // top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+    }
   },
   "params": {
     "customer_id": 2,
@@ -151,7 +165,9 @@ After saving a report you can render it by sending a POST request to `/report/re
   }
 }
 ```
-The report will be rendered into PDF and sent as a buffer in the response (future versions may allow you to save the PDF to S3 buckets).
+***Note: It is on you to provide the necessary margins to show headers, footers and page numbers. Page numbers replace footers/headers if positioned on the bottom/top.***
+
+The report will be rendered into PDF and sent as a buffer in the response.
 
 ### Delete a report
 
