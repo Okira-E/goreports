@@ -43,7 +43,7 @@ func GeneratePDFFromHtml(reportParams types.ReportAttributesForPdfGenerator, pri
 	page := pdf.NewPageReader(strings.NewReader(reportParams.Body))
 
 	// Setup repeating header if provided.
-	if reportParams.Header.IsSome() && !printingOptions.PageNumbers.Enabled {
+	if reportParams.Header.IsSome() && (!printingOptions.PageNumbers.Enabled || !strings.Contains(printingOptions.PageNumbers.Position, "top")) {
 		err = os.WriteFile("./core/header_temp.html", []byte("<!doctype html>"+reportParams.Header.Unwrap()), 0644)
 		if err != nil {
 			return &bytes.Buffer{}, safego.Some(err)
@@ -52,7 +52,7 @@ func GeneratePDFFromHtml(reportParams types.ReportAttributesForPdfGenerator, pri
 		page.HeaderHTML.Set("file:///" + os.Getenv("PWD") + "/core/header_temp.html")
 	}
 	// Setup repeating footer if provided and page numbers are not enabled.
-	if reportParams.Footer.IsSome() && !printingOptions.PageNumbers.Enabled {
+	if reportParams.Footer.IsSome() && (!printingOptions.PageNumbers.Enabled || !strings.Contains(printingOptions.PageNumbers.Position, "bottom")) {
 		err = os.WriteFile("./core/footer_temp.html", []byte("<!doctype html>"+reportParams.Footer.Unwrap()), 0644)
 		if err != nil {
 			return &bytes.Buffer{}, safego.Some(err)
