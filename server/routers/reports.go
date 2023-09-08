@@ -1,7 +1,9 @@
 package routers
 
 import (
+	"database/sql"
 	"github.com/Okira-E/goreports/core"
+	"github.com/Okira-E/goreports/safego"
 	"github.com/Okira-E/goreports/types"
 	"github.com/Okira-E/goreports/utils"
 	"github.com/gofiber/fiber/v2"
@@ -22,7 +24,7 @@ func ReportsRouter(app *fiber.App) {
 
 		for rows.Next() {
 			report := types.ReportWithNullableFields{}
-			err := rows.Scan(&report.ID, &report.Name, &report.Title, &report.Description, &report.Template, &report.CreatedAt, &report.UpdatedAt)
+			err := rows.Scan(&report.ID, &report.Name, &report.Title, &report.Description, &report.Body, &report.CreatedAt, &report.UpdatedAt)
 			if err != nil {
 				return ctx.Status(500).SendString(err.Error())
 			}
@@ -37,7 +39,7 @@ func ReportsRouter(app *fiber.App) {
 				Name:        report.Name.String,
 				Title:       report.Title.String,
 				Description: report.Description.String,
-				Template:    report.Template.String,
+				Body:        report.Body.String,
 				CreatedAt:   report.CreatedAt.Int64,
 				UpdatedAt:   report.UpdatedAt.Int64,
 			})
@@ -61,8 +63,8 @@ func ReportsRouter(app *fiber.App) {
 		if report.Title == "" {
 			return ctx.Status(400).SendString("The report title is required.")
 		}
-		if report.Template == "" {
-			return ctx.Status(400).SendString("The report template is required.")
+		if report.Body == "" {
+			return ctx.Status(400).SendString("The report body is required.")
 		}
 
 		// Set the timestamps.
@@ -70,7 +72,24 @@ func ReportsRouter(app *fiber.App) {
 		report.UpdatedAt = 0
 
 		// Save the report.
-		errOpt := (*InternalDb).Exec("INSERT INTO reports (name, title, description, template, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)", report.Name, report.Title, report.Description, report.Template, report.CreatedAt, report.UpdatedAt)
+		var header, footer sql.NullString
+
+		header = sql.NullString{
+			String: report.Header,
+			Valid:  true,
+		}
+		footer = sql.NullString{
+			String: report.Footer,
+			Valid:  true,
+		}
+
+		if len(header.String) == 0 {
+			header = sql.NullString{}
+		}
+		if len(footer.String) == 0 {
+			footer = sql.NullString{}
+		}
+		errOpt := (*InternalDb).Exec("INSERT INTO reports (name, title, description, body, header, footer, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", report.Name, report.Title, report.Description, report.Body, header, footer, report.CreatedAt, report.UpdatedAt)
 		if errOpt.IsSome() {
 			return ctx.Status(400).SendString(errOpt.Unwrap().Error())
 		}
@@ -88,8 +107,8 @@ func ReportsRouter(app *fiber.App) {
 		// Define the request renderBody.
 		var renderBody struct {
 			ReportName      string                `json:"reportName"`
-			PrintingOptions types.PrintingOptions `json:"printingOptions"`
 			Params          map[string]any        `json:"params"`
+			PrintingOptions types.PrintingOptions `json:"printingOptions"`
 		}
 
 		// Parse the request renderBody.
@@ -114,7 +133,7 @@ func ReportsRouter(app *fiber.App) {
 		emptyResult := true
 		for rows.Next() {
 			emptyResult = false
-			err := rows.Scan(&report.ID, &report.Name, &report.Title, &report.Description, &report.Template, &report.CreatedAt, &report.UpdatedAt)
+			err := rows.Scan(&report.ID, &report.Name, &report.Title, &report.Description, &report.Body, &report.Header, &report.Footer, &report.CreatedAt, &report.UpdatedAt)
 			if err != nil {
 				return ctx.Status(500).SendString(err.Error())
 			}
@@ -124,7 +143,7 @@ func ReportsRouter(app *fiber.App) {
 			return ctx.Status(404).SendString("report was not found.")
 		}
 
-		handlebarsTemplate, queries, errMsgOpt := core.ParseTemplate(report.Template.String, renderBody.Params, ExternalDb)
+		handlebarsTemplate, queries, errMsgOpt := core.ParseTemplate(report.Body.String, renderBody.Params, ExternalDb)
 		if errMsgOpt.IsSome() {
 			return ctx.Status(400).SendString(errMsgOpt.Unwrap())
 		}
@@ -136,9 +155,20 @@ func ReportsRouter(app *fiber.App) {
 		}
 
 		// Generate the document
-		reportGeneratorParams := types.ReportGeneratorParams{
-			Title: report.Title.String,
-			Html:  compiledTemplate,
+		header, footer := safego.None[string](), safego.None[string]()
+
+		if report.Header.Valid {
+			header = safego.Some(report.Header.String)
+		}
+		if report.Footer.Valid {
+			footer = safego.Some(report.Footer.String)
+		}
+
+		reportGeneratorParams := types.ReportAttributesForPdfGenerator{
+			Title:  report.Title.String,
+			Body:   compiledTemplate,
+			Header: header,
+			Footer: footer,
 		}
 
 		generatedPDFBuffer, errOpt := core.GeneratePDFFromHtml(reportGeneratorParams, renderBody.PrintingOptions)

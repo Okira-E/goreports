@@ -38,7 +38,9 @@ func createInternalDbTables(connection *sql.DB) safego.Option[error] {
 				name VARCHAR(255) NOT NULL UNIQUE,
 				title VARCHAR(255) NOT NULL,
 				description TEXT NULL,
-				template TEXT NOT NULL,
+				body TEXT NOT NULL,
+				header TEXT NULL,
+				footer TEXT NULL,
 				created_at TEXT NOT NULL,
 				updated_at TEXT NOT NULL
         );`

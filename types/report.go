@@ -7,7 +7,9 @@ type Report struct {
 	Name        string `json:"name" validate:"required"`
 	Title       string `json:"title" validate:"required"`
 	Description string `json:"description"`
-	Template    string `json:"template" validate:"required"`
+	Body        string `json:"body" validate:"required"`
+	Header      string `json:"header"`
+	Footer      string `json:"footer"`
 	CreatedAt   int64  `json:"createdAt"`
 	UpdatedAt   int64  `json:"updatedAt"`
 }
@@ -17,7 +19,9 @@ type ReportWithNullableFields struct {
 	Name        sql.NullString `json:"name" validate:"required"`
 	Title       sql.NullString `json:"title" validate:"required"`
 	Description sql.NullString `json:"description"`
-	Template    sql.NullString `json:"template" validate:"required"`
+	Body        sql.NullString `json:"body" validate:"required"`
+	Header      sql.NullString `json:"header"`
+	Footer      sql.NullString `json:"footer"`
 	CreatedAt   sql.NullInt64  `json:"createdAt"`
 	UpdatedAt   sql.NullInt64  `json:"updatedAt"`
 }
