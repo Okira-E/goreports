@@ -34,6 +34,10 @@ go env -w CGO_ENABLED=1
 go build
 ```
 
+## OpenAPI Documentation
+
+GoReports has an OpenAPI documentation that can be found at `/swagger` endpoint when the server is running.
+
 ## Usage and Documentation
 
 GoReports is a command line tool. You can run `goreports --help` to see the available commands and flags.

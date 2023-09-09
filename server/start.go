@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/Okira-E/goreports/datasource"
-	"github.com/Okira-E/goreports/server/routers"
+	"github.com/Okira-E/goreports/server/routes"
 	"github.com/Okira-E/goreports/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -60,10 +60,10 @@ func StartServer() {
 	// Set up CORS.
 	app.Use(cors.New())
 	// Set up the databases.
-	routers.InternalDb = &internalDb
-	routers.ExternalDb = &externalDb
+	routes.InternalDb = &internalDb
+	routes.ExternalDb = &externalDb
 	// Set up the routes.
-	routers.GlobalRouter(app)
+	routes.GlobalRouter(app)
 
 	// Start the server.
 	const port = ":3200"

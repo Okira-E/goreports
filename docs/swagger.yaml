@@ -1,0 +1,140 @@
+definitions:
+  types.PageNumbersOptions:
+    properties:
+      enabled:
+        type: boolean
+      position:
+        type: string
+    type: object
+  types.PrintingOptions:
+    properties:
+      landscape:
+        type: boolean
+      marginBottom:
+        type: integer
+      marginLeft:
+        type: integer
+      marginRight:
+        type: integer
+      marginTop:
+        type: integer
+      pageNumbers:
+        $ref: '#/definitions/types.PageNumbersOptions'
+      paperSize:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /report/delete:
+    delete:
+      consumes:
+      - '*/*'
+      description: Delete a report
+      parameters:
+      - description: The name of the report to be deleted
+        in: body
+        name: reportName
+        required: true
+        schema:
+          type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+      summary: Delete a report
+      tags:
+      - reports
+  /report/list:
+    get:
+      consumes:
+      - '*/*'
+      description: List all stored reports
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+      summary: List all reports
+      tags:
+      - reports
+  /report/render:
+    post:
+      consumes:
+      - '*/*'
+      description: Render a report
+      parameters:
+      - description: The name of the report
+        in: body
+        name: reportName
+        required: true
+        schema:
+          type: string
+      - description: The parameters injected inside the report body to be passed at
+          runtime
+        in: body
+        name: params
+        schema:
+          type: object
+      - description: The printing options to be used in the report
+        in: body
+        name: printingOptions
+        schema:
+          $ref: '#/definitions/types.PrintingOptions'
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+      summary: Render a report
+      tags:
+      - reports
+  /report/save:
+    post:
+      consumes:
+      - '*/*'
+      description: Save a report
+      parameters:
+      - description: The name of the report
+        in: body
+        name: reportName
+        required: true
+        schema:
+          type: string
+      - description: The title of the report
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: The description of the report
+        in: body
+        name: description
+        schema:
+          type: string
+      - description: The body of the report
+        in: body
+        name: '`body`'
+        required: true
+        schema:
+          type: string
+      - description: The header of the report
+        in: body
+        name: header
+        schema:
+          type: string
+      - description: The footer of the report
+        in: body
+        name: footer
+        schema:
+          type: string
+      produces:
+      - text/plain
+      responses:
+        "201":
+          description: Created
+      summary: Save a report
+      tags:
+      - reports
+swagger: "2.0"

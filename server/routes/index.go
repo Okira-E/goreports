@@ -1,4 +1,4 @@
-package routers
+package routes
 
 import (
 	"github.com/Okira-E/goreports/datasource"
@@ -10,4 +10,5 @@ var ExternalDb *datasource.DataSource
 
 func GlobalRouter(app *fiber.App) {
 	ReportsRouter(app)
+	SwaggerRouter(app)
 }
