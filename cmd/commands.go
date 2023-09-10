@@ -29,6 +29,7 @@ var runInit = &cobra.Command{
 	Short: "Initializes GoReports on your system",
 	Long:  `Initializes GoReports on your system`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Get the database information from the flags, if they exist.
 		dbDialect, err := cmd.Flags().GetString("db-dialect")
 		if err != nil {
 			log.Fatalf("error while getting the db-dialect flag: %v", err)
