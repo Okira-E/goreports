@@ -160,7 +160,7 @@ After saving a report you can render it by sending a POST request to `/report/re
     "marginLeft": 0,
     "pageNumbers": {
       "enabled": false,
-      "position": "bottom-center" // top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+      "position": "bottom-center || top-left || top-center || top-right || bottom-left || bottom-center || bottom-right"
     }
   },
   "params": {
