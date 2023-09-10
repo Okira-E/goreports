@@ -118,7 +118,7 @@ This is a snippet of a template that uses all the syntaxes mentioned above:
     </table>
 </div>
 ```
-It generates (along with hidden CSS code) this [report](./examples/payment_history.pdf) when rendered. As you can see, The SQL query is executed with the `customer_id` param (passed at each render request in the API) and its multiple results are passed to the handlebars loop.
+It generates (along with hidden CSS code) this [report](./examples/payment_history_header_pagenumbers.pdf) when rendered. As you can see, The SQL query is executed with the `customer_id` param (passed at each render request in the API) and its multiple results are passed to the handlebars loop.
 
 
 ### Save a report
