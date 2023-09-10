@@ -8,7 +8,7 @@
             "delete": {
                 "description": "Delete a report",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "text/plain"
@@ -38,9 +38,6 @@
         "/report/list": {
             "get": {
                 "description": "List all stored reports",
-                "consumes": [
-                    "*/*"
-                ],
                 "produces": [
                     "text/plain"
                 ],
@@ -59,7 +56,7 @@
             "post": {
                 "description": "Render a report",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "text/plain"
@@ -106,7 +103,7 @@
             "post": {
                 "description": "Save a report",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "text/plain"

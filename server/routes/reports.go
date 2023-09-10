@@ -26,7 +26,6 @@ func ReportsRouter(app *fiber.App) {
 // @Summary List all reports
 // @Description List all stored reports
 // @Tags reports
-// @Accept */*
 // @Produce plain
 // @Success 200 "OK"
 // @Router /report/list [get]
@@ -67,7 +66,7 @@ func listReports(ctx *fiber.Ctx) error {
 // @Summary Save a report
 // @Description Save a report
 // @Tags reports
-// @Accept */*
+// @Accept json
 // @Produce plain
 // @Param reportName body string true "The name of the report"
 // @Param title body string true "The title of the report"
@@ -131,7 +130,7 @@ func saveReport(ctx *fiber.Ctx) error {
 // @Summary Render a report
 // @Description Render a report
 // @Tags reports
-// @Accept */*
+// @Accept json
 // @Produce plain
 // @Param reportName body string true "The name of the report"
 // @Param params body object false "The parameters injected inside the report body to be passed at runtime"
@@ -218,7 +217,7 @@ func renderReport(ctx *fiber.Ctx) error {
 // @Summary Delete a report
 // @Description Delete a report
 // @Tags reports
-// @Accept */*
+// @Accept json
 // @Produce plain
 // @Param reportName body string true "The name of the report to be deleted"
 // @Success 200 "OK"

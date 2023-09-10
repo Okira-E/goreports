@@ -20,7 +20,7 @@ const docTemplate = `{
             "delete": {
                 "description": "Delete a report",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "text/plain"
@@ -50,9 +50,6 @@ const docTemplate = `{
         "/report/list": {
             "get": {
                 "description": "List all stored reports",
-                "consumes": [
-                    "*/*"
-                ],
                 "produces": [
                     "text/plain"
                 ],
@@ -71,7 +68,7 @@ const docTemplate = `{
             "post": {
                 "description": "Render a report",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "text/plain"
@@ -118,7 +115,7 @@ const docTemplate = `{
             "post": {
                 "description": "Save a report",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "text/plain"

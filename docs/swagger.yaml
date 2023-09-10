@@ -29,7 +29,7 @@ paths:
   /report/delete:
     delete:
       consumes:
-      - '*/*'
+      - application/json
       description: Delete a report
       parameters:
       - description: The name of the report to be deleted
@@ -48,8 +48,6 @@ paths:
       - reports
   /report/list:
     get:
-      consumes:
-      - '*/*'
       description: List all stored reports
       produces:
       - text/plain
@@ -62,7 +60,7 @@ paths:
   /report/render:
     post:
       consumes:
-      - '*/*'
+      - application/json
       description: Render a report
       parameters:
       - description: The name of the report
@@ -93,7 +91,7 @@ paths:
   /report/save:
     post:
       consumes:
-      - '*/*'
+      - application/json
       description: Save a report
       parameters:
       - description: The name of the report
