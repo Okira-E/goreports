@@ -187,6 +187,12 @@ To delete a report, send a DELETE request to GoReports' server at `/report/delet
 
 To list all reports, send a GET request to GoReports' server at `/report/list` endpoint.
 
+## Limitations
+
+- Footers and headers may overlap with the generated page numbers if the positioning are the same
+- Errors currently are being returned written inside the PDF. This will be fixed in the future
+- Handlebars helper functions are not supported as should be compiled into GoReport's binary
+
 ## Contributing
 
 Pull requests are always welcomed and encouraged. For major changes, please open an issue first to discuss what you would like to change.
