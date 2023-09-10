@@ -87,11 +87,11 @@ This will start goreports server on port 3200.
 
 GoReports uses an extended handlebars syntax to parse and render templates. The syntax is as follows:
 
-- `[P[PARAMETER_NAME]]` - This will be replaced with the value of the parameter passed to the template.
+- `[P[PARAMETER_NAME]]` - This will be replaced with the value of the parameter passed to the template
 - `[Q[SQL_QUERY]]` - This will be replaced with the results of the SQL query. If the query returns multiple rows,
-  the result will be an array of objects. If the query returns a single row, the result will be a be inserted directly into the HTML.
+  the result will be an array of objects. If the query returns a single row, the result will be a be inserted directly into the HTML
 - `{{#each [Q[SQL_QUERY]]}}` - This will execute the (multiple results) SQL query and pass the result array to the
-  handlebars block. You can then access the properties of each object in the array like you would in a normal handlebars.
+  handlebars block. You can then access the properties of each object in the array like you would in a normal handlebars
 
 #### Example
 This is a snippet of a template that uses all the syntaxes mentioned above:
