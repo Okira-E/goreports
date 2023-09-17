@@ -3,6 +3,7 @@ package routes
 import (
 	"database/sql"
 	"github.com/Okira-E/goreports/core"
+	"github.com/Okira-E/goreports/internalDb"
 	"github.com/Okira-E/goreports/safego"
 	"github.com/Okira-E/goreports/types"
 	"github.com/Okira-E/goreports/utils"
@@ -14,7 +15,7 @@ import (
 func ReportsRouter(app *fiber.App) {
 	const controllerName = "/report"
 
-	app.Get(controllerName+"/list", listReports)
+	app.Get(controllerName+"/list", listReportsApi)
 
 	app.Post(controllerName+"/save", saveReport)
 
@@ -29,35 +30,10 @@ func ReportsRouter(app *fiber.App) {
 // @Produce plain
 // @Success 200 "OK"
 // @Router /report/list [get]
-func listReports(ctx *fiber.Ctx) error {
-	rows, errOpt := (*InternalDb).Query("SELECT * FROM reports")
+func listReportsApi(ctx *fiber.Ctx) error {
+	reports, errOpt := internalDb.ListReports(InternalDb)
 	if errOpt.IsSome() {
 		return ctx.Status(500).SendString(errOpt.Unwrap().Error())
-	}
-
-	reportsWithNullableFields := []types.ReportWithNullableFields{}
-
-	for rows.Next() {
-		report := types.ReportWithNullableFields{}
-		err := rows.Scan(&report.ID, &report.Name, &report.Title, &report.Description, &report.Body, &report.CreatedAt, &report.UpdatedAt)
-		if err != nil {
-			return ctx.Status(500).SendString(err.Error())
-		}
-		reportsWithNullableFields = append(reportsWithNullableFields, report)
-	}
-
-	// Convert the nullable fields to non-nullable fields.
-	reports := []types.Report{}
-	for _, report := range reportsWithNullableFields {
-		reports = append(reports, types.Report{
-			ID:          report.ID,
-			Name:        report.Name.String,
-			Title:       report.Title.String,
-			Description: report.Description.String,
-			Body:        report.Body.String,
-			CreatedAt:   report.CreatedAt.Int64,
-			UpdatedAt:   report.UpdatedAt.Int64,
-		})
 	}
 
 	return ctx.Status(200).JSON(reports)
