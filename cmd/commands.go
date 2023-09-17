@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/Okira-E/goreports/datasource"
 	"github.com/Okira-E/goreports/internalDb"
 	"github.com/Okira-E/goreports/server"
 	"github.com/Okira-E/goreports/types"
@@ -151,6 +152,50 @@ var startServerCmd = &cobra.Command{
 	},
 }
 
+var listReportsCmd = &cobra.Command{
+	Use:   "list-reports",
+	Short: "List all reports",
+	Long:  "Lists all reports",
+	Run: func(cmd *cobra.Command, args []string) {
+		// Check if the config file exists.
+		found, errOpt := utils.DoesConfigFileExists()
+		if errOpt.IsSome() {
+			log.Fatalf("error while checking if the config file exists: %v", errOpt.Unwrap())
+		}
+
+		if !found {
+			utils.Log("The config file does not exist. Running the `init` command...")
+			runInit.Run(cmd, args)
+		}
+
+		// Establish a connection with internal database.
+		dataDir, errOpt := utils.GetDataDirBasedOnOS()
+		if errOpt.IsSome() {
+			log.Fatalf("error while getting the data directory: %v", errOpt.Unwrap())
+		}
+
+		var internalDbConn datasource.DataSource
+		internalDbConn = datasource.NewSqliteDb(dataDir + "/internal.db")
+
+		errOpt = internalDbConn.Connect()
+		if errOpt.IsSome() {
+			log.Fatalf("error while connecting to the database: %v", errOpt.Unwrap())
+		}
+		defer internalDbConn.Disconnect()
+
+		// List all reports.
+		utils.Log("Listing all reports...")
+		reports, errOpt := internalDb.ListReports(&internalDbConn)
+		if errOpt.IsSome() {
+			log.Fatalf("error while listing all reports: %v", errOpt.Unwrap())
+		}
+
+		for i, report := range reports {
+			utils.Log(strconv.Itoa(i+1) + ": " + report.Name)
+		}
+	},
+}
+
 func Execute() {
 	// Add the flags to the runInit command.
 	runInit.Flags().StringP("db-dialect", "d", "", "The dialect of the database")
@@ -165,6 +210,7 @@ func Execute() {
 		versionCmd,
 		runInit,
 		startServerCmd,
+		listReportsCmd,
 	)
 
 	if err := rootCmd.Execute(); err != nil {
