@@ -3,7 +3,7 @@ package utils
 import (
 	"database/sql"
 	"encoding/json"
-	"github.com/Okira-E/goreports/safego"
+	"github.com/okira-e/goreports/safego"
 	"os"
 	"strconv"
 	"strings"

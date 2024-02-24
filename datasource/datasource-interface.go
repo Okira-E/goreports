@@ -2,7 +2,7 @@ package datasource
 
 import (
 	"database/sql"
-	"github.com/Okira-E/goreports/safego"
+	"github.com/okira-e/goreports/safego"
 )
 
 type DataSource interface {

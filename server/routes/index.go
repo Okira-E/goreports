@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/Okira-E/goreports/datasource"
 	"github.com/gofiber/fiber/v2"
+	"github.com/okira-e/goreports/datasource"
 )
 
 var InternalDb *datasource.DataSource

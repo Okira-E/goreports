@@ -2,7 +2,7 @@
 
 package main
 
-import "github.com/Okira-E/goreports/cmd"
+import "github.com/okira-e/goreports/cmd"
 
 func main() {
 	cmd.Execute()

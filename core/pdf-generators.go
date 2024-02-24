@@ -2,9 +2,9 @@ package core
 
 import (
 	"bytes"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/types"
 	pdf "github.com/SebastiaanKlippert/go-wkhtmltopdf"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/types"
 	"os"
 	"strings"
 )

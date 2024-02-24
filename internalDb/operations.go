@@ -1,9 +1,9 @@
 package internalDb
 
 import (
-	"github.com/Okira-E/goreports/datasource"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/types"
+	"github.com/okira-e/goreports/datasource"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/types"
 )
 
 func ListReports(internalDb *datasource.DataSource) ([]types.Report, safego.Option[error]) {

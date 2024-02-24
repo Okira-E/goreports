@@ -2,10 +2,10 @@ package datasource
 
 import (
 	"database/sql"
-	"github.com/Okira-E/goreports/safego"
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
+	"github.com/okira-e/goreports/safego"
 	"strings"
 )
 

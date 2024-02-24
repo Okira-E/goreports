@@ -1,6 +1,6 @@
 package types
 
-import "github.com/Okira-E/goreports/safego"
+import "github.com/okira-e/goreports/safego"
 
 type Config struct {
 	DbConfig DbConfig `json:"db_config"`

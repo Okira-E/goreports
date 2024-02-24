@@ -2,10 +2,10 @@ package utils
 
 import (
 	"fmt"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/types"
-	"github.com/Okira-E/goreports/vars"
 	"github.com/manifoldco/promptui"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/types"
+	"github.com/okira-e/goreports/vars"
 	"strconv"
 )
 

@@ -2,9 +2,9 @@ package internalDb
 
 import (
 	"database/sql"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/utils"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/utils"
 )
 
 // BuildInternalDb builds the internal database for the first time.

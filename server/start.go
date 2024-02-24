@@ -1,11 +1,11 @@
 package server
 
 import (
-	"github.com/Okira-E/goreports/datasource"
-	"github.com/Okira-E/goreports/server/routes"
-	"github.com/Okira-E/goreports/utils"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/okira-e/goreports/datasource"
+	"github.com/okira-e/goreports/server/routes"
+	"github.com/okira-e/goreports/utils"
 	"log"
 )
 

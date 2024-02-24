@@ -2,12 +2,12 @@ package routes
 
 import (
 	"database/sql"
-	"github.com/Okira-E/goreports/core"
-	"github.com/Okira-E/goreports/internalDb"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/types"
-	"github.com/Okira-E/goreports/utils"
 	"github.com/gofiber/fiber/v2"
+	"github.com/okira-e/goreports/core"
+	"github.com/okira-e/goreports/internalDb"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/types"
+	"github.com/okira-e/goreports/utils"
 )
 
 // ReportsRouter sets up the routes for reports.

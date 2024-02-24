@@ -3,9 +3,9 @@ package core
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Okira-E/goreports/datasource"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/utils"
+	"github.com/okira-e/goreports/datasource"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/utils"
 	"strconv"
 	"strings"
 )

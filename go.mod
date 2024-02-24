@@ -1,4 +1,4 @@
-module github.com/Okira-E/goreports
+module github.com/okira-e/goreports
 
 go 1.20
 

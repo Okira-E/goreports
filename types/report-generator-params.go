@@ -1,6 +1,6 @@
 package types
 
-import "github.com/Okira-E/goreports/safego"
+import "github.com/okira-e/goreports/safego"
 
 // ReportAttributesForPdfGenerator is the attributes needed to generate a PDF.
 // It is used in core/pdf-generators.go.

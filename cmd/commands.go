@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"github.com/Okira-E/goreports/datasource"
-	"github.com/Okira-E/goreports/internalDb"
-	"github.com/Okira-E/goreports/server"
-	"github.com/Okira-E/goreports/types"
-	"github.com/Okira-E/goreports/utils"
+	"github.com/okira-e/goreports/datasource"
+	"github.com/okira-e/goreports/internalDb"
+	"github.com/okira-e/goreports/server"
+	"github.com/okira-e/goreports/types"
+	"github.com/okira-e/goreports/utils"
 	"github.com/spf13/cobra"
 	"log"
 	"strconv"

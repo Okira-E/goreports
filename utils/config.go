@@ -2,8 +2,8 @@ package utils
 
 import (
 	"errors"
-	"github.com/Okira-E/goreports/safego"
-	"github.com/Okira-E/goreports/types"
+	"github.com/okira-e/goreports/safego"
+	"github.com/okira-e/goreports/types"
 	"os"
 	"path/filepath"
 	"runtime"

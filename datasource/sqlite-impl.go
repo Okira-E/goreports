@@ -2,8 +2,8 @@ package datasource
 
 import (
 	"database/sql"
-	"github.com/Okira-E/goreports/safego"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/okira-e/goreports/safego"
 )
 
 // SqliteDb is a wrapper for the sql.DB type.

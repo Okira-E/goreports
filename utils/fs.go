@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/Okira-E/goreports/safego"
+	"github.com/okira-e/goreports/safego"
 	"os"
 )
 

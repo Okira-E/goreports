@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"github.com/Okira-E/goreports/safego"
 	"github.com/aymerick/raymond"
+	"github.com/okira-e/goreports/safego"
 )
 
 // ParseHandleBars parses a handlebars template with the given template string and data.
